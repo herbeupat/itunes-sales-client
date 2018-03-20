@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Get app sales and analytics from itunes connect}
   spec.description   = %q{A fastlane extension to get your app transactions }
-  spec.homepage      = "https://github.com/sadikay/itunes-sales-client"
+  spec.homepage      = "https://github.com/herbeupat/itunes-sales-client"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

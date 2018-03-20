@@ -10,47 +10,57 @@ module Spaceship
       "https://analytics.itunes.apple.com/"
     end
 
-    def get_units(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_units(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'units'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_page_view_count(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_page_view_count(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'pageViewCount'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_iap(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_iap(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'iap'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_sales(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_sales(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'sales'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_paying_users(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_paying_users(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'payingUsers'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_impressions_total(id, start_time = Date.today - 30.day, end_time = Date.today)
+    def get_impressions_total(id, start_time = Date.today - 30.day, end_time = Date.today, group = nil)
       measure = 'impressionsTotal'
-      get_data(id, measure, start_time, end_time)
+      get_data(id, measure, start_time, end_time, group)
     end
 
-    def get_data(id, measure, start_time, end_time)
+    def get_data(id, measure, start_time, end_time, group_dimension = nil)
       start_time = start_time.strftime('%Y-%m-%dT%H:%M:%SZ')
       end_time = end_time.strftime('%Y-%m-%dT%H:%M:%SZ')
 
       ids = [id]
 
+      group = nil
+      if group_dimension != nil
+        group = {
+            "dimension": group_dimension,
+            "limit": 3,
+            "metric": "installs",
+            "rank": "DESCENDING"
+        }
+      end
+
       body = { 
         "adamId": ids, 
         "frequency": "DAY", 
         "measures": [measure],
-        "group": nil, 
+        "group": group,
         "dimensionFilters": [], 
         "startTime": start_time, 
         "endTime": end_time 
